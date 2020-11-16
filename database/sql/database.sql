@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS cinema;
+CREATE DATABASE cinema;
+USE cinema;
+
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
 	id 					INT 								PRIMARY KEY 	AUTO_INCREMENT,
