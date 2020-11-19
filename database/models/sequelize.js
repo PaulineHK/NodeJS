@@ -1,15 +1,20 @@
 const Sequelize = require("sequelize");
-const db = require('../../config/database.json');
+const database = require('../../config/database.json');
 
 const sequelize = new Secuelize(
-	db.dev.database,
-	db.dev.user,
-	db.dev.password,
+	database.dev.database,
+	database.dev.user,
+	database.dev.password,
 	{
-		dialect: db.dev.dialect,
-		host: db.dev.host,
-		logging: db.dev.logging
+		dialect: database.dev.dialect,
+		host: database.dev.host,
+		logging: database.dev.logging
 	}
 );
+const db = {};
+db.Secuelize = Sequelize;
+db.sequelize = sequelize;
 
-module.exports.db = db;
+
+
+module.exports = db;
