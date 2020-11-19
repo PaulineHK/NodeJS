@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "database": "cinema",
+        "user": "admin",
+        "password": "12345",
+        "host": "localhost",
+        "dialect": "mysql",
+        "logging": false
+    }
+}
