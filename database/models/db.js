@@ -16,7 +16,17 @@ db.usersRoles = require('./UserRole')(sequelize, Sequelize);
 db.usersTickets = require('./UserTicket')(sequelize, Sequelize);
 
 db.requests.hasMany(db.users);
-db.users.belongsTo(db.requests);
+db.users.belongsTo(db.requests, { onDelete: "restrict" });
+
+db.movies.hasMany(db.sessions);
+db.sessions.belongsTo(db.movies, { onDelete: "restrict" });
+
+db.states.hasMany(db.tickets);
+db.tickets.belongsTo(db.states, { onDelete: "restrict" });
+
+db.sessions.hasMany(db.tickets);
+db.tickets.belongsTo(db.sessions, { onDelete: "restrict" });//unique
+
 
 
 module.exports = db;
