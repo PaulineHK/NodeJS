@@ -17,10 +17,7 @@ const User = Sequelize.define('users', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
-	deletedAt: {
-		type: Sequelize.DATE,
-		field: 'deleted_at'
-	}
+	deletedAt: 'deleted_at'
 });
 
 User.hasOne(Request, { onDelete: "cascade", onUpdate: "restrict" });
