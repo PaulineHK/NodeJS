@@ -1,10 +1,5 @@
-'use strict'
-/*
-const db = require('sequelize.js');
-const Sequelize = require("sequelize");
-*/
 
-module.exports = (sequelize, DataType) => {
+export default (sequelize, DataType) => {
     const UserRole = sequelize.define("usersRoles", {
         id: {
             type: DataType.INTEGER,
@@ -12,6 +7,20 @@ module.exports = (sequelize, DataType) => {
             autoIncrement: true,
             allowNull: false
         },
+        userId: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            unique: true
+        },
+        roleId: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            unique: true
+        }
+    }, {
+        sequelize,
+        modelName: 'UserRole',
+        tableName: 'users_roles',
     });
     return UserRole;
 }

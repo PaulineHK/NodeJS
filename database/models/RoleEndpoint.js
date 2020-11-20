@@ -1,10 +1,5 @@
-'use strict'
-/*
-const db = require('sequelize.js');
-const Sequelize = require("sequelize");
-*/
 
-module.exports = (sequelize, DataType) => {
+export default (sequelize, DataType) => {
     const RoleEndpoint = sequelize.define("rolesEndpoints", {
         id: {
             type: DataType.INTEGER,
@@ -12,6 +7,20 @@ module.exports = (sequelize, DataType) => {
             autoIncrement: true,
             allowNull: false
         },
+        roleId: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            field: 'role_id'
+        },
+        endpointId: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            field: 'endpoint_id'
+        }
+    }, {
+        sequelize,
+        modelName: 'RoleEndpoint',
+        tableName: 'roles_endpoints',
     });
     return RoleEndpoint;
 }

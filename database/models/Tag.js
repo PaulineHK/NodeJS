@@ -1,9 +1,5 @@
-'use strict'
-/*
-const db = require('sequelize.js');
-const Sequelize = require("sequelize");
-*/
-module.exports = (sequelize, DataType) => {
+
+export default (sequelize, DataType) => {
 	const Tag = sequelize.define("tags", {
 		id: {
 			type: DataType.INTEGER,
@@ -16,6 +12,10 @@ module.exports = (sequelize, DataType) => {
 			allowNull: false,
 			unique: true
 		}
+	}, {
+		sequelize,
+		modelName: 'Tag',
+		tableName: 'tags',
 	});
 	return Tag;
 }

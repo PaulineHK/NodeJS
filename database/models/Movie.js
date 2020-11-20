@@ -1,42 +1,45 @@
 'use strict'
-/*
-const db = require('sequelize.js');
-const Sequelize = require("sequelize");
-*/
-module.exports = (sequelize, DataTypes) => {
+
+export default (sequelize, DataType) => {
     const Movie = sequelize.define('movies', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
         },
         title: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             unique: true,
             allowNull: false
         },
         time: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             allowNull: false
         },
         age: {
-            type: DataTypes.STRING(5),
+            type: DataType.STRING(5),
             allowNull: false
         },
         year: {
-            type: DataTypes.DATEONLY,
+            type: DataType.DATEONLY,
             allowNull: false
         },
         description: {
-            type: DataTypes.TEXT,
+            type: DataType.TEXT,
             allowNull: true
         },
         poster: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: true
         },
-        deletedAt: 'deleted_at'
+
+    }, {
+        sequelize,
+        paranoid: true,
+        deletedAt: 'deleted_at',
+        modelName: 'Movie',
+        tableName: 'movies'
     });
     return Movie;
 }

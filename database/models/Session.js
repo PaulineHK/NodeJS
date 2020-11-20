@@ -1,21 +1,26 @@
-'use strict'
-/*
-const db = require('sequelize.js');
-const Sequelize = require("sequelize");
-*/
-module.exports = (sequelize, DataTypes) => {
+
+export default (sequelize, DataType) => {
     const Session = sequelize.define('sessions', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataType.DATE,
             allowNull: false
         },
-        deletedAt: 'deleted_at'
+        movieId: {
+            type: DataType.INTEGER,
+            allowNull: false
+        }
+    }, {
+        sequelize,
+        paranoid: true,
+        deletedAt: 'deleted_at',
+        modelName: 'Session',
+        tableName: 'sessions',
     });
     return Session;
 }
