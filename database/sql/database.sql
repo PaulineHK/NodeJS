@@ -12,14 +12,18 @@ CREATE TABLE users(
 
 DROP TABLE IF EXISTS movies;
 CREATE TABLE movies(
-	id 					 		INT 										PRIMARY KEY 	AUTO_INCREMENT,
+	id 					 		 INT 										PRIMARY KEY 	AUTO_INCREMENT,
 	title 				VARCHAR(255) 			NOT NULL,
-	time 					 	INT 			NOT NULL,
-	age 				  VARCHAR(5) 			NOT NULL,
-    year 						YEAR 			NOT NULL,
+	time 					 	 INT 			NOT NULL,
+    year 						 INT 			NOT NULL,
 	description 				TEXT,
 	poster 				VARCHAR(255),
-	deleted_at 			   TIMESTAMP	
+	start_show					DATE			NOT NULL,
+	end_show					DATE			NOT NULL,
+	deleted_at 			   TIMESTAMP,
+	CHECK(year>=1895 AND year<=CURRENT_DATE),
+	CHECK(time>0),
+	CHECK(start_show<=end_show)
 );
 
 DROP TABLE IF EXISTS tags;
@@ -36,11 +40,6 @@ CREATE TABLE movies_tags(
 	UNIQUE(movie_id, tag_id)
 );
 
-DROP TABLE IF EXISTS states;
-CREATE TABLE states(
-	id 							INT 										PRIMARY KEY 	AUTO_INCREMENT,
-	name 				 VARCHAR(1) 	 		NOT NULL		UNIQUE
-);
 
 DROP TABLE IF EXISTS users_tickets;
 CREATE TABLE users_tickets(
@@ -82,7 +81,7 @@ DROP TABLE IF EXISTS requests;
 CREATE TABLE requests(
 	id 							INT 										PRIMARY KEY 	AUTO_INCREMENT,
 	user_id 					INT 			NOT NULL,
-	date 				  TIMESTAMP 			NOT NULL
+	created_at 			  TIMESTAMP 			NOT NULL
 );
 
 
@@ -91,7 +90,8 @@ CREATE TABLE sessions(
 	id							INT											PRIMARY KEY		AUTO_INCREMENT,
 	movie_id					INT				NOT NULL,
 	date				  TIMESTAMP				NOT NULL,
-	deleted_at			  TIMESTAMP					NULL						
+	deleted_at			  TIMESTAMP					NULL,
+	CHECK(date>=CURRENT_DATE)					
 );
 
 
@@ -101,11 +101,13 @@ CREATE TABLE tickets(
 	seat 						INT 			NOT NULL,
 	row 						INT 			NOT NULL,
 	price 				DECIMAL(6,2) 			NOT NULL,
-	state_id 					INT 			NOT NULL,
 	session_id					INT				NOT NULL,
 	deleted_at 			  TIMESTAMP,	
-	UNIQUE(seat, row, session_id)
+	UNIQUE(seat, row, session_id),
+	CHECK(price>0 AND row>0 AND price>0 AND seat>0)
+
 );
+
 
 ALTER TABLE users_tickets
 	ADD CONSTRAINT FK_users_tickets_to_users FOREIGN KEY (user_id)
@@ -116,14 +118,9 @@ ALTER TABLE users_tickets
 		REFERENCES tickets(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE;
-	
 		
 
 ALTER TABLE tickets
-	ADD CONSTRAINT FK_tickets_to_states FOREIGN KEY (state_id)
-		REFERENCES states(id)
-		ON DELETE RESTRICT
-		ON UPDATE CASCADE,	
 	ADD CONSTRAINT FK_tickets_to_sessions FOREIGN KEY (session_id)
 		REFERENCES sessions(id)
 		ON DELETE RESTRICT
@@ -157,6 +154,7 @@ ALTER TABLE roles_endpoints
 		REFERENCES endpoints(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE;
+
 
 ALTER TABLE movies_tags
 	ADD CONSTRAINT FK_movies_tags_to_movies FOREIGN KEY (movie_id)
