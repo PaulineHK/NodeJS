@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
 	const UserTicket = sequelize.define("usersTags", {
 		id: {
 			type: DataType.INTEGER,

@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
     const Request = sequelize.define('requests', {
         id: {
             type: DataType.INTEGER,
@@ -14,11 +14,15 @@ export default (sequelize, DataType) => {
         }
     }, {
         sequelize,
+        timestamps: true,
         paranoid: true,
         createdAt: true,
-        deletedAt: 'deleted_date',
+        updatedAt: false,
         modelName: 'Request',
         tableName: 'requests'
     });
+    Request.associate = (model) => {
+        Request.belongsTo(model.users, { foreignKey: 'userId', onDelete: 'RESTRICT' })
+    }
     return Request;
 }

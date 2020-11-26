@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
 	const Tag = sequelize.define("tags", {
 		id: {
 			type: DataType.INTEGER,
@@ -10,12 +10,19 @@ export default (sequelize, DataType) => {
 		name: {
 			type: DataType.STRING(15),
 			allowNull: false,
-			unique: true
+			unique: true,
+			validate: {
+				notNull: true,
+				equals: 'specific value'
+			}
 		}
 	}, {
 		sequelize,
 		modelName: 'Tag',
 		tableName: 'tags',
 	});
+	Tag.associate = (model) => {
+		Tag.belongsToMany(model.movies, { through: model.moviesTags, foreignKey: 'tagId' });
+	}
 	return Tag;
 }

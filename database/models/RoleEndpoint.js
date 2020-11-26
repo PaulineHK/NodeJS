@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
     const RoleEndpoint = sequelize.define("rolesEndpoints", {
         id: {
             type: DataType.INTEGER,

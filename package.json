@@ -1,11 +1,10 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
+  "description": "",
   "main": "app.js",
-  "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "demon": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -13,19 +12,14 @@
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulineHK/NodeJS/issues"
+  },
+  "homepage": "https://github.com/PaulineHK/NodeJS#readme",
   "dependencies": {
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0"
-  },
-  "devDependencies": {
-    "ndb": "^1.1.5",
-    "nodemon": "^2.0.6"
-  },
-  "description": "",
-  "bugs": {
-    "url": "https://github.com/PaulineHK/NodeJS/issues"
-  },
-  "homepage": "https://github.com/PaulineHK/NodeJS#readme"
+    "validator": "^10.11.0"
+  }
 }

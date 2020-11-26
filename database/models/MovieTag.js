@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
 	const MovieTag = sequelize.define("moviesTags", {
 		id: {
 			type: DataType.INTEGER,
@@ -21,7 +21,10 @@ export default (sequelize, DataType) => {
 		}
 	}, {
 		sequelize,
+		timestamps: true,
 		paranoid: true,
+		createdAt: false,
+		updatedAt: false,
 		deletedAt: 'deleted_at',
 		modelName: 'MovieTag',
 		tableName: 'movies_tags'

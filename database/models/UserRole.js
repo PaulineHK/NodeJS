@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
     const UserRole = sequelize.define("usersRoles", {
         id: {
             type: DataType.INTEGER,

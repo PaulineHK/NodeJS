@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
 	const Role = sequelize.define("roles", {
 		id: {
 			type: DataType.INTEGER,
@@ -10,12 +10,21 @@ export default (sequelize, DataType) => {
 		name: {
 			type: DataType.STRING(25),
 			allowNull: false,
-			unique: true
+			unique: true,
+			validate: {
+				isIn: ['user', 'admin'],
+			}
 		}
 	}, {
 		sequelize,
 		modelName: 'Role',
 		tableName: 'roles',
 	});
+	Role.associate = (model) => {
+		Role.belongsToMany(model.users, { through: model.usersRoles, foreignKey: 'roleId' });
+		Role.belongsToMany(model.endpoints, { through: model.rolesEndpoints, foreignKey: 'roleId' });
+
+	}
+
 	return Role;
 }

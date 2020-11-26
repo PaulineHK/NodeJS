@@ -1,5 +1,5 @@
 
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
     const Ticket = sequelize.define('tickets', {
         id: {
             type: DataType.INTEGER,
@@ -11,16 +11,31 @@ export default (sequelize, DataType) => {
             type: DataType.INTEGER,
             unique: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                notNull: true,
+                notEmpty: true,
+                isNumeric: true,
+                min: 1
+            }
         },
         row: {
             type: DataType.INTEGER,
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                notNull: true,
+                isNumeric: true,
+                min: 1,
+            }
         },
         price: {
             type: DataType.DECIMAL(6, 2),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notNull: true,
+                isDecimal: true,
+            }
         },
         sessionId: {
             type: DataType.INTEGER,
@@ -29,10 +44,17 @@ export default (sequelize, DataType) => {
         }
     }, {
         sequelize,
+        timestamps: true,
         paranoid: true,
+        createdAt: false,
+        updatedAt: false,
         deletedAt: 'deleted_at',
         modelName: 'Ticket',
         tableName: 'tickets',
     });
+    Ticket.associate = (model) => {
+        Ticket.belongsToMany(model.users, { through: model.usersTickets, foreignKey: 'ticketId' });
+
+    }
     return Ticket;
 }

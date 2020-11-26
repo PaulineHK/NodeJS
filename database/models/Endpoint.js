@@ -1,6 +1,5 @@
 
-
-export default (sequelize, DataType) => {
+module.exports = (sequelize, DataType) => {
     const Endpoint = sequelize.define("endpoints", {
         id: {
             type: DataType.INTEGER,
@@ -11,7 +10,11 @@ export default (sequelize, DataType) => {
         url: {
             type: DataType.STRING(2048),
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                isUrl: true,
+                notNull: true,
+            }
         }
     }, {
         sequelize,
@@ -19,5 +22,8 @@ export default (sequelize, DataType) => {
         tableName: 'endpoints'
 
     });
+    Endpoint.associate = (model) => {
+        Endpoint.belongsToMany(model.roles, { through: model.rolesEndpoints, foreignKey: 'endpointId' });
+    }
     return Endpoint;
 }
