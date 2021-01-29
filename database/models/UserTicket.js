@@ -5,7 +5,6 @@ module.exports = (sequelize, DataType) => {
 			type: DataType.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-			allowNull: false
 		},
 		userId: {
 			type: DataType.INTEGER,
@@ -19,8 +18,14 @@ module.exports = (sequelize, DataType) => {
 		}
 	}, {
 		sequelize,
-		modelName: 'UserTicket',
+		modelName: 'usersTickets',
 		tableName: 'users_tickets',
+		initialAutoIncrement: '1',
 	});
+
+	UserTicket.associate = (model) => {
+		UserTicket.belongsTo(model.users, { foreignKey: 'userId' });
+		UserTicket.belongsTo(model.tickets, { foreignKey: 'ticketId' });
+	}
 	return UserTicket;
 }

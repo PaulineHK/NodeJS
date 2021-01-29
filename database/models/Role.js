@@ -5,7 +5,7 @@ module.exports = (sequelize, DataType) => {
 			type: DataType.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-			allowNull: false
+
 		},
 		name: {
 			type: DataType.STRING(25),
@@ -19,11 +19,13 @@ module.exports = (sequelize, DataType) => {
 		sequelize,
 		modelName: 'Role',
 		tableName: 'roles',
+		initialAutoIncrement: '1',
 	});
 	Role.associate = (model) => {
 		Role.belongsToMany(model.users, { through: model.usersRoles, foreignKey: 'roleId' });
+		/*
 		Role.belongsToMany(model.endpoints, { through: model.rolesEndpoints, foreignKey: 'roleId' });
-
+*/
 	}
 
 	return Role;

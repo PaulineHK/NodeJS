@@ -5,22 +5,24 @@ module.exports = (sequelize, DataType) => {
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull: false
         },
         userId: {
             type: DataType.INTEGER,
-            allowNull: false,
             unique: true
         },
         roleId: {
             type: DataType.INTEGER,
-            allowNull: false,
             unique: true
         }
     }, {
         sequelize,
         modelName: 'UserRole',
         tableName: 'users_roles',
+        initialAutoIncrement: '1',
     });
+    UserRole.associate = (model) => {
+        UserRole.belongsTo(model.users, { foreignKey: 'userId' });
+        UserRole.belongsTo(model.roles, { foreignKey: 'roleId' });
+    }
     return UserRole;
 }

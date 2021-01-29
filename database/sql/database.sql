@@ -1,4 +1,4 @@
-
+CREATE DATABASE cinema;
 USE cinema;
 
 
@@ -105,7 +105,6 @@ CREATE TABLE tickets(
 	deleted_at 			  TIMESTAMP,	
 	UNIQUE(seat, row, session_id),
 	CHECK(price>0 AND row>0 AND price>0 AND seat>0)
-
 );
 
 

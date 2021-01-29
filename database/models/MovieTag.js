@@ -5,7 +5,6 @@ module.exports = (sequelize, DataType) => {
 			type: DataType.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-			allowNull: false
 		},
 		movieId: {
 			type: DataType.INTEGER,
@@ -27,7 +26,12 @@ module.exports = (sequelize, DataType) => {
 		updatedAt: false,
 		deletedAt: 'deleted_at',
 		modelName: 'MovieTag',
-		tableName: 'movies_tags'
+		tableName: 'movies_tags',
+		initialAutoIncrement: '1',
 	});
+	MovieTag.associate = (model) => {
+		MovieTag.belongsTo(model.movies, { foreignKey: 'movieId' });
+		MovieTag.belongsTo(model.tags, { foreignKey: 'tagId' });
+	}
 	return MovieTag;
 }

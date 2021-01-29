@@ -5,7 +5,7 @@ module.exports = (sequelize, DataType) => {
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull: false
+
         },
         date: {
             type: DataType.DATE,
@@ -17,7 +17,8 @@ module.exports = (sequelize, DataType) => {
         },
         movieId: {
             type: DataType.INTEGER,
-            allowNull: false
+            allowNull: false,
+            field: 'movie_id'
         }
     }, {
         sequelize,
@@ -28,6 +29,7 @@ module.exports = (sequelize, DataType) => {
         deletedAt: 'deleted_at',
         modelName: 'Session',
         tableName: 'sessions',
+        initialAutoIncrement: '1',
     });
 
     Session.associate = (model) => {

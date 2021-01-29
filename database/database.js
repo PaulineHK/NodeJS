@@ -11,9 +11,10 @@ module.exports.authenticate = async () => {
 
 module.exports.sync = async () => {
 	try {
-		await db.sync();
+		await db.sync(/*{ alter: true }*/);
 		console.log("All models were synchronized successfully.");
 	} catch (error) {
 		console.log('Unable to sync with db: ', error);
 	}
 }
+

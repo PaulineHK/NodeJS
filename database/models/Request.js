@@ -5,7 +5,6 @@ module.exports = (sequelize, DataType) => {
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull: false
         },
         userId: {
             type: DataType.INTEGER,
@@ -19,7 +18,8 @@ module.exports = (sequelize, DataType) => {
         createdAt: true,
         updatedAt: false,
         modelName: 'Request',
-        tableName: 'requests'
+        tableName: 'requests',
+        initialAutoIncrement: '1',
     });
     Request.associate = (model) => {
         Request.belongsTo(model.users, { foreignKey: 'userId', onDelete: 'RESTRICT' })

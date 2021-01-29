@@ -5,7 +5,6 @@ module.exports = (sequelize, DataType) => {
 			type: DataType.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-			allowNull: false
 		},
 		name: {
 			type: DataType.STRING(15),
@@ -20,6 +19,7 @@ module.exports = (sequelize, DataType) => {
 		sequelize,
 		modelName: 'Tag',
 		tableName: 'tags',
+		initialAutoIncrement: '1',
 	});
 	Tag.associate = (model) => {
 		Tag.belongsToMany(model.movies, { through: model.moviesTags, foreignKey: 'tagId' });
