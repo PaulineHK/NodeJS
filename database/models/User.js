@@ -24,11 +24,11 @@ const User = sequelize.define('users', {
 	},
 	lastName: {
 		type: DataType.STRING,
-		field: 'lname',
+		field: 'last_name',
 	},
 	firstName: {
 		type: DataType.STRING,
-		field: 'fname',
+		field: 'first_name',
 	}
 	//timestamps: false
 	//deletedAt: true
@@ -47,7 +47,6 @@ const User = sequelize.define('users', {
 User.associate = (model) => {
 	User.hasOne(model.requests, { foreignKey: 'userId', onDelete: 'RESTRICT' });
 	User.belongsToMany(model.roles, { through: model.usersRoles, foreignKey: 'userId' });
-	User.belongsToMany(model.tickets, { through: model.usersTickets, foreignKey: 'userId' });
 }
 
 module.exports = User;

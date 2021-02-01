@@ -27,14 +27,14 @@ module.exports = class movieRepository {
 	}
 
 	async findTopMonth(month) {
-		return await db.query(`SELECT id,title,year,time,description FROM movies WHERE id IN(SELECT m.id FROM movies AS m, users_tickets AS ut, tickets AS t, sessions AS s
-			WHERE m.id=s.movie_id AND s.id=t.session_id AND t.id=ut.ticket_id
-				AND ${month}=MONTH(s.date) GROUP BY m.id HAVING MAX(COUNT(m.id)));`, { type: QueryType.SELECT });
+		return await db.query(`SELECT id,title,year,time,description FROM movies WHERE id IN
+			(SELECT s.movie_id FROM tickets AS t, sessions AS s WHERE t.session_id=s.id
+				AND ${month}=MONTH(s.date) GROUP BY s.movie_id 
+					HAVING MAX(COUNT(s.movie_id)));`, { type: QueryType.SELECT });
 	}
 
 	async findTop() {
-		return await db.query(`SELECT SELECT id,title,year,time,description FROM movies WHERE id IN(SELECT m.id FROM
-			movies AS m, users_tickets AS ut WHERE m.id=ut.movie_id GROUP BY m.id
-				HAVING COUNT(m.id)>=((SELECT COUNT(id) FROM users_tickets)/(SELECT COUNT(id) FROM movies)));`, { type: QueryType.SELECT });
+		return await db.query(`SELECT id,title,year,time,description FROM movies WHERE id IN(SELECT s.movie_id FROM 	tickets AS t, sessions AS s WHERE t.session_id=s.id GROUP BY s.movie_id
+				HAVING COUNT(t.id)>=((SELECT COUNT(id) FROM tickets)/(SELECT COUNT(id) FROM movies)));`, { type: QueryType.SELECT });
 	}
 }

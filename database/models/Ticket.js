@@ -39,7 +39,13 @@ const Ticket = sequelize.define('tickets', {
     sessionId: {
         type: DataType.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        field: 'session_id',
+    },
+    userId: {
+        type: DataType.INTEGER,
+        allowNull: false,
+        field: 'user_id',
     }
 }, {
     sequelize,
@@ -53,7 +59,7 @@ const Ticket = sequelize.define('tickets', {
     initialAutoIncrement: '1',
 });
 Ticket.associate = (model) => {
-    Ticket.belongsToMany(model.users, { through: model.usersTickets, foreignKey: 'ticketId' });
+    Ticket.belongsTo(model.users, { foreignKey: 'userId', onDelete: 'RESTRICT' });
 
 }
 

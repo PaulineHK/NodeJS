@@ -10,11 +10,13 @@ const UserRole = sequelize.define("usersRoles", {
     },
     userId: {
         type: DataType.INTEGER,
-        unique: true
+        unique: true,
+        field: 'user_id',
     },
     roleId: {
         type: DataType.INTEGER,
-        unique: true
+        unique: true,
+        field: 'role_id',
     }
 }, {
     sequelize,

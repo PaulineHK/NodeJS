@@ -8,7 +8,6 @@ db.roles = require('./Role');
 db.sessions = require('./Session');
 db.tickets = require('./Ticket');
 db.moviesTags = require('./MovieTag');
-db.usersTickets = require('./UserTicket');
 db.usersRoles = require('./UserRole');
 
 
