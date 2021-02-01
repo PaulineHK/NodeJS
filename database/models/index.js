@@ -1,18 +1,15 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../sequelize');
-
 const db = {};
 
 db.users = require('./User');
-db.tags = require('./Tag')(sequelize, Sequelize);
-db.requests = require('./Request')(sequelize, Sequelize);
+db.tags = require('./Tag');
+db.requests = require('./Request');
 db.movies = require('./Movie');
-db.roles = require('./Role')(sequelize, Sequelize);
-db.sessions = require('./Session')(sequelize, Sequelize);
+db.roles = require('./Role');
+db.sessions = require('./Session');
 db.tickets = require('./Ticket');
-db.moviesTags = require('./MovieTag')(sequelize, Sequelize);
-db.usersTickets = require('./UserTicket')(sequelize, Sequelize);
-db.usersRoles = require('./UserRole')(sequelize, Sequelize);
+db.moviesTags = require('./MovieTag');
+db.usersTickets = require('./UserTicket');
+db.usersRoles = require('./UserRole');
 
 
 module.exports.init = () => {

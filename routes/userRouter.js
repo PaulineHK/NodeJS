@@ -4,13 +4,14 @@ const router = express.Router();
 const userController = require('../controllers/userController.js');
 const controller = new userController();
 
-const bodyParser = require("body-parser");
-const parser = bodyParser.urlencoded({ extended: false });
+//router.post('/create', controller.create);
 
-router.post('/create', parser, controller.create);
+router.get('/:id', controller.get);
 
-router.get('/get', parser, controller.get);
+router.get('/list', controller.getAll);
 
-router.delete('/delete', parser, controller.delete);
+router.delete('/:id', controller.delete);
+
+router.post('/:id/request', controller.sendRequest);
 
 module.exports = router;

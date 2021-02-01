@@ -13,4 +13,6 @@ module.exports = class userRepository {
 	async delete(options) {
 		return await User.destroy(options);
 	}
+
+
 }

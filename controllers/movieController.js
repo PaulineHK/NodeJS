@@ -1,5 +1,5 @@
 const MovieService = require('../services/movieService.js');
-
+const response = require('../classes/response.js');
 
 const movieService = new MovieService();
 
@@ -7,35 +7,43 @@ module.exports = class movieController {
 
 	async create(req, res) {
 		try {
-			return res.status(201).json(await movieService.create(req.body));
+			let id = await movieService.create(req.body);
+			res.send(response.success(201, 'Movie created', `Movie id: ${id}`));
 		} catch (error) {
-			console.log(error);
-			return res.status(404).json(error);
+			res.send(response.error(error.status, error.name, error.message));
 		}
 	}
 
 	async get(req, res) {
 		try {
-			return res.status(200).json(await movieService.get(req.body));
+			let movie = await movieService.get(req.params['id']);
+			res.send(response.success(200, 'Movie is found', movie));
 		} catch (error) {
-			return res.status(404).json(error);
+			res.send(response.error(error.status, error.name, error.message));
 		}
 	}
 
-
 	async getAll(req, res) {
-		try {
-			return res.status(200).json(await movieService.getAll());
-		} catch (error) {
-			return res.status(404).json(error);
-		}
+		let movies = await movieService.getAll();
+		res.send(response.success(200, 'List of movies', movies));
 	}
 
 	async delete(req, res) {
 		try {
-			return res.status(200).json(await movieService.delete(req.body))
-		} catch (errror) {
-			return res.status(404).json(error);
+			await movieService.delete(req.params['id']);
+			res.send(response.success(200, 'Movie is deleted'));
+		} catch (error) {
+			res.send(response.error(error.status, error.name, error.message));
 		}
+	}
+
+	async findTopMonth(req, res) {
+		let movie = movieService.findTopMonth(req.query.month);
+		res.send(response.success(200, 'Movie of the month', movie));
+	}
+
+	async findTop(req, res) {
+		let movies = movieService.findTop();
+		res.send(response.success(200, 'Top of movies', movies));
 	}
 }
