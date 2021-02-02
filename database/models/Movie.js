@@ -75,7 +75,7 @@ const Movie = sequelize.define('movies', {
     }
 });
 Movie.associate = (model) => {
-    Movie.hasMany(model.sessions, { foreignKey: 'movieId', onDelete: 'RESTRICT' });
+    Movie.hasMany(model.sessions, { as: 'session', foreignKey: 'movieId', onDelete: 'RESTRICT' });
     Movie.belongsToMany(model.tags, { through: model.moviesTags, foreignKey: 'movieId' });
 
 }

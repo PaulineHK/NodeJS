@@ -45,8 +45,9 @@ const User = sequelize.define('users', {
 
 });
 User.associate = (model) => {
-	User.hasOne(model.requests, { foreignKey: 'userId', onDelete: 'RESTRICT' });
+	User.hasOne(model.requests, { as: 'request', foreignKey: 'userId', onDelete: 'RESTRICT' });
 	User.belongsToMany(model.roles, { through: model.usersRoles, foreignKey: 'userId' });
+	User.hasMany(model.tickets, { as: 'ticket', foreignKey: 'userId', onDelete: 'RESTRICT' });
 }
 
 module.exports = User;

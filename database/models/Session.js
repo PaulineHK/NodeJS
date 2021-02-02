@@ -12,6 +12,7 @@ const Session = sequelize.define('sessions', {
     date: {
         type: DataType.DATE,
         allowNull: false,
+        unique: 'unique',
         validate: {
             notNull: true,
             isDate: true,
@@ -20,6 +21,7 @@ const Session = sequelize.define('sessions', {
     movieId: {
         type: DataType.INTEGER,
         allowNull: false,
+        unique: 'unique',
         field: 'movie_id'
     }
 }, {
@@ -35,7 +37,7 @@ const Session = sequelize.define('sessions', {
 });
 
 Session.associate = (model) => {
-    Session.belongsTo(model.movies, { foreignKey: 'movieId', onDelete: 'RESTRICT' });
-
+    Session.belongsTo(model.movies, { as: 'movie', foreignKey: 'movieId', onDelete: 'RESTRICT' });
+    Session.hasMany(model.tickets, { foreignKey: 'sessionId', onDelete: 'RESTRICT' });
 }
 module.exports = Session;

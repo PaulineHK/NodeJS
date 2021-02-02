@@ -38,12 +38,16 @@ module.exports = class movieController {
 	}
 
 	async findTopMonth(req, res) {
-		let movie = movieService.findTopMonth(req.query.month);
+		let movie = await movieService.findTopMonth(req.query.month);
 		res.send(response.success(200, 'Movie of the month', movie));
 	}
 
 	async findTop(req, res) {
-		let movies = movieService.findTop();
-		res.send(response.success(200, 'Top of movies', movies));
+		try {
+			let movies = await movieService.findTop();
+			res.send(response.success(200, 'Top of movies', movies));
+		} catch (error) {
+			res.send(response.error(404, error.name, error.message));
+		}
 	}
 }

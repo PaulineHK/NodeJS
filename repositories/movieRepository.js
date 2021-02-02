@@ -1,7 +1,10 @@
 const Movie = require('../database/models/Movie.js');
-const db = require('../database/sequelize.js');
-const { QueryType } = require('sequelize');
+/*
 
+const { QueryTypes } = require('sequelize');
+*/
+const sequelize = require('sequelize');
+const db = require('../database/sequelize.js');
 module.exports = class movieRepository {
 
 	async create(movie) {
@@ -35,6 +38,6 @@ module.exports = class movieRepository {
 
 	async findTop() {
 		return await db.query(`SELECT id,title,year,time,description FROM movies WHERE id IN(SELECT s.movie_id FROM 	tickets AS t, sessions AS s WHERE t.session_id=s.id GROUP BY s.movie_id
-				HAVING COUNT(t.id)>=((SELECT COUNT(id) FROM tickets)/(SELECT COUNT(id) FROM movies)));`, { type: QueryType.SELECT });
+				HAVING COUNT(t.id)>=((SELECT COUNT(id) FROM tickets)/(SELECT COUNT(id) FROM movies)));`, { type: db.QueryTypes.SELECT });
 	}
 }

@@ -9,7 +9,7 @@ const Ticket = sequelize.define('tickets', {
     },
     seat: {
         type: DataType.INTEGER,
-        unique: true,
+        // unique: true,
         allowNull: false,
         validate: {
             notNull: true,
@@ -21,7 +21,7 @@ const Ticket = sequelize.define('tickets', {
     row: {
         type: DataType.INTEGER,
         allowNull: false,
-        unique: true,
+        // unique: true,
         validate: {
             notNull: true,
             isNumeric: true,
@@ -31,6 +31,7 @@ const Ticket = sequelize.define('tickets', {
     price: {
         type: DataType.DECIMAL(6, 2),
         allowNull: false,
+        defaultValue: 5.00,
         validate: {
             notNull: true,
             isDecimal: true,
@@ -39,7 +40,7 @@ const Ticket = sequelize.define('tickets', {
     sessionId: {
         type: DataType.INTEGER,
         allowNull: false,
-        unique: true,
+        // unique: true,
         field: 'session_id',
     },
     userId: {
@@ -57,10 +58,11 @@ const Ticket = sequelize.define('tickets', {
     modelName: 'Ticket',
     tableName: 'tickets',
     initialAutoIncrement: '1',
+    // indexes: [{ unique: true, fields: ['seat', 'row', 'session_id'] }],
 });
 Ticket.associate = (model) => {
-    Ticket.belongsTo(model.users, { foreignKey: 'userId', onDelete: 'RESTRICT' });
-
+    Ticket.belongsTo(model.users, { as: 'user', foreignKey: 'userId', onDelete: 'RESTRICT' });
+    Ticket.belongsTo(model.sessions, { as: 'session', foreignKey: 'sessionId', onDelete: 'RESTRICT' });
 }
 
 module.exports = Ticket;

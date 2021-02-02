@@ -4,12 +4,11 @@ const router = express.Router();
 const movieController = require('../controllers/movieController.js');
 const controller = new movieController();
 
-
 router.post('/create', controller.create);
 
 router.get('/list', controller.getAll);
 
-router.get('/:id', controller.get);
+router.get('/info/:id', controller.get);
 
 router.delete('/:id', controller.delete);
 

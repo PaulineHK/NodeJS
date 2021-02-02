@@ -4,16 +4,16 @@ const response = require('../classes/response.js');
 const userService = new UserService();
 
 module.exports = class userController {
-	/*
-		async create(req, res) {
-			try {
-				return res.status(201).json(await userService.create(req.body));
-			} catch (error) {
-				console.log(error);
-				return res.status(404).json(error);
-			}
+
+	async create(req, res) {
+		try {
+			let user = await userService.create(req.body);
+			res.send(response.success(201, 'Account is created', user.id));
+		} catch (error) {
+			res.send(response.error(error.status, error.name, error.message));
 		}
-	*/
+	}
+
 
 	async getAll(req, res) {
 		let users = await userService.getAll();

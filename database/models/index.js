@@ -10,7 +10,6 @@ db.tickets = require('./Ticket');
 db.moviesTags = require('./MovieTag');
 db.usersRoles = require('./UserRole');
 
-
 module.exports.init = () => {
 	Object.keys(db).forEach(function (modelName) {
 		if ("associate" in db[modelName]) {

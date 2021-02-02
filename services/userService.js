@@ -1,25 +1,25 @@
 const UserRepository = require('../repositories/userRepository.js');
 const notFound = require('../classes/errors/notFound.js');
+const badRequest = require('../classes/errors/badRequest.js');
 const RequestRepository = require('../repositories/requestRepository.js');
 const userRepository = new UserRepository();
 const requestRepository = new RequestRepository();
 
 module.exports = class userService {
-	/*
-		async create(body) {
-			let user = userRepository.getAll({
-				where: {
-					login: body.login,
-				}
-			});
-			if (!user)
-				return await userRepository.create({
-					login: body.login, password: body.password,
-					lastName: body.lname, firstName: body.fname,
-				});
-			else return 'User exists';
-		}
-	*/
+
+	async create(body) {
+		let user = userRepository.getAll({
+			where: {
+				login: body.login,
+			}
+		});
+		if (user)
+			throw new badRequest('Login is allready used');
+		return await userRepository.create({
+			login: body.login, password: body.password,
+			lastName: body.lastName, firstName: body.firstName,
+		});
+	}
 
 	async get(id) {
 		let user = await userRepository.getAll({
@@ -68,4 +68,5 @@ module.exports = class userService {
 		});
 		return await userRepository.delete(id);
 	}
+
 }
